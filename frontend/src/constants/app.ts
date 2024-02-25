@@ -23,6 +23,13 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
   get: (searchParams, prop: string) => searchParams.get(prop),
 }) as any;
 
+if (params.remote_backend) {
+  localStorage.setItem('remote-backend', params.remote_backend);
+}
+
+const remote_backend = params.remote_backend ?? localStorage.getItem('remote-backend');
+
+
 export const App = {
   ASSET_CDN_BASE_URL: ASSET_CDN_BASE_URL_INT,
   ASSET_ITEM_ICON_BASE_URL: ASSET_CDN_BASE_URL_INT + 'assets/item_icons/',
@@ -37,7 +44,7 @@ export const App = {
   ASSET_WALLPAPER_URL: ASSET_CDN_BASE_URL_INT + 'assets/wallpaper/',
   ASSET_INVENTORY_SLOT_URL: ASSET_CDN_BASE_URL_INT + 'assets/inventory/',
   ASSET_SPRITE_ITEM_ICONS_URL: ASSET_CDN_BASE_URL_INT + 'assets/sprites/item-icons.css',
-  BACKEND_BASE_URL: params.remote_backend ?? (process.env.VUE_APP_BACKEND_BASE_URL ? process.env.VUE_APP_BACKEND_BASE_URL : window.location.origin),
+  BACKEND_BASE_URL: remote_backend ?? (process.env.VUE_APP_BACKEND_BASE_URL ? process.env.VUE_APP_BACKEND_BASE_URL : window.location.origin),
 
   // app level
   DEBUG: LocalSettings.get(Setting.DEBUG_MODE) === "true",

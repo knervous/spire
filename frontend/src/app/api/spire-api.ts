@@ -10,9 +10,14 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
   get: (searchParams, prop: string) => searchParams.get(prop),
 }) as any;
 
+if (params.remote_backend) {
+  localStorage.setItem('remote-backend', params.remote_backend);
+}
+
+const remote_backend = params.remote_backend ?? localStorage.getItem('remote-backend');
 export class SpireApi {
   static getBasePath() {
-    return params.remote_backend ? '/remoteapi' :
+    return remote_backend ? '/remoteapi' :
     (process.env.VUE_APP_BACKEND_BASE_URL && process.env.NODE_ENV !== 'production' ?
       process.env.VUE_APP_BACKEND_BASE_URL :
       window.location.origin)
@@ -37,7 +42,7 @@ export class SpireApi {
     if (UserContext.getAccessToken() !== "") {
       spireAxiosConfig.headers = {'Authorization': 'Bearer ' + UserContext.getAccessToken(), 'x-remote-api': params.remote_backend}
     } else {
-      spireAxiosConfig.headers = { 'x-remote-api': params.remote_backend }
+      spireAxiosConfig.headers = { 'x-remote-api': remote_backend }
     }
 
     return spireAxiosConfig

@@ -6,12 +6,18 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
   get: (searchParams, prop: string) => searchParams.get(prop),
 }) as any;
 
+if (params.remote_backend) {
+  localStorage.setItem('remote-backend', params.remote_backend);
+}
+
+const remote_backend = params.remote_backend ?? localStorage.getItem('remote-backend');
+
 export class OcculusClient {
 
   /**
    * Base URL for admin api
    */
-  private static _baseUrl = params.remote_backend ? '/remoteapi' :
+  private static _baseUrl = remote_backend ? '/remoteapi' :
     (process.env.VUE_APP_BACKEND_BASE_URL && process.env.NODE_ENV !== 'production' ?
       process.env.VUE_APP_BACKEND_BASE_URL :
       window.location.origin)
@@ -24,7 +30,7 @@ export class OcculusClient {
     if (this.getAccessToken() !== '') {
       config.headers = {'Authorization': 'Bearer ' + this.getAccessToken(), 'x-remote-api': params.remote_backend }
     } else {
-      config.headers = { 'x-remote-api': params.remote_backend }
+      config.headers = { 'x-remote-api': remote_backend }
     }
 
     return axios.create(config)
