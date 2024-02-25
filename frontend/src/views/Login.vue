@@ -176,6 +176,8 @@ export default {
         const r = await axios.post(SpireApi.getBasePath() + "/auth/login", {
           username: this.username,
           password: this.password,
+        }, {
+          headers: {'x-remote-api' : remote_backend}
         })
         if (r.data && r.status === 200) {
           this.notification = "Login succeeded!"
