@@ -1,17 +1,20 @@
 import axios, {AxiosRequestConfig} from 'axios'
 import util from "util";
 
+
+const params = new Proxy(new URLSearchParams(window.location.search), {
+  get: (searchParams, prop: string) => searchParams.get(prop),
+}) as any;
+
 export class OcculusClient {
 
   /**
    * Base URL for admin api
    */
-  private static _baseUrl = (
-    process.env.VUE_APP_BACKEND_BASE_URL && process.env.NODE_ENV !== 'production' ?
+  private static _baseUrl = params.remote_backend ??
+    (process.env.VUE_APP_BACKEND_BASE_URL && process.env.NODE_ENV !== 'production' ?
       process.env.VUE_APP_BACKEND_BASE_URL :
-      window.location.origin
-  );
-
+      window.location.origin)
   static getBaseUrl(): string {
     return this._baseUrl
   }

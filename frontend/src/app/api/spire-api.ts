@@ -6,11 +6,15 @@ import {ROUTE} from "@/routes";
 
 const PUBLIC_SPIRE = "https://spire.akkadius.com/api/v1";
 
+const params = new Proxy(new URLSearchParams(window.location.search), {
+  get: (searchParams, prop: string) => searchParams.get(prop),
+}) as any;
+
 export class SpireApi {
   static getBasePath() {
-    return process.env.VUE_APP_BACKEND_BASE_URL && process.env.NODE_ENV !== 'production' ?
+    return params.remote_backend ?? (process.env.VUE_APP_BACKEND_BASE_URL && process.env.NODE_ENV !== 'production' ?
       process.env.VUE_APP_BACKEND_BASE_URL :
-      window.location.origin
+      window.location.origin)
   }
 
   static getPublicWithLocalFallbacks(): Array<any> {

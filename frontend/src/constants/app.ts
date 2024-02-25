@@ -19,6 +19,10 @@ import {LocalSettings, Setting} from "@/app/local-settings/localsettings";
 // These assets get pulled down during install and during release build but do not get checked in "ever"
 let ASSET_CDN_BASE_URL_INT = "/eq-asset-preview-master/";
 
+const params = new Proxy(new URLSearchParams(window.location.search), {
+  get: (searchParams, prop: string) => searchParams.get(prop),
+}) as any;
+
 export const App = {
   ASSET_CDN_BASE_URL: ASSET_CDN_BASE_URL_INT,
   ASSET_ITEM_ICON_BASE_URL: ASSET_CDN_BASE_URL_INT + 'assets/item_icons/',
@@ -33,7 +37,7 @@ export const App = {
   ASSET_WALLPAPER_URL: ASSET_CDN_BASE_URL_INT + 'assets/wallpaper/',
   ASSET_INVENTORY_SLOT_URL: ASSET_CDN_BASE_URL_INT + 'assets/inventory/',
   ASSET_SPRITE_ITEM_ICONS_URL: ASSET_CDN_BASE_URL_INT + 'assets/sprites/item-icons.css',
-  BACKEND_BASE_URL: (process.env.VUE_APP_BACKEND_BASE_URL ? process.env.VUE_APP_BACKEND_BASE_URL : window.location.origin),
+  BACKEND_BASE_URL: params.remote_backend ?? (process.env.VUE_APP_BACKEND_BASE_URL ? process.env.VUE_APP_BACKEND_BASE_URL : window.location.origin),
 
   // app level
   DEBUG: LocalSettings.get(Setting.DEBUG_MODE) === "true",

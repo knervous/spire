@@ -1,0 +1,19 @@
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm start",
+  "framework": "vue",
+  "outputDirectory": "build",
+  "installCommand": "npm install",
+  "functions": {
+    "api/hash.js": {
+      "memory": 1000,
+      "maxDuration": 5
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/eq-asset-preview-master/(.*)",
+      "destination": "https://raw.githubusercontent.com/Akkadius/eq-asset-preview/master/$1"
+    }
+  ]
+}
