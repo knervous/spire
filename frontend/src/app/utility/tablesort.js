@@ -1,3 +1,6 @@
+import 'core-js/es/array';
+
+
 function Tablesort(el, options) {
     if (!(this instanceof Tablesort)) return new Tablesort(el, options);
 

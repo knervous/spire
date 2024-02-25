@@ -83,27 +83,23 @@ module.exports = {
       },
     };
     // Remove the existing rule for .js and .jsx files
-    config.module.rules.delete('js').delete('jsx');
+   // config.module.rules.delete('js').delete('jsx');
     config.module.rules.delete('ts').delete('tsx');
 
     // Add a new rule to use swc-loader for .js and .jsx files
-    config.module
-      .rule('swc')
-      .test(/\.(js|jsx)$/)
-      .use('swc-loader')
-      .loader('swc-loader')
-      .end();
-    // Use swc for our vue loader
-    config.module
-      .rule('vue')
-      .use('vue-loader')
-      .tap(options => {
-        options.loaders = {
-          ...options.loaders,
-          js: 'swc-loader',
-        };
-        return options;
-      });
+    // Replace babel-loader with swc-loader for JS files
+    config.module.rule('js').test(/\.js$/).use('swc-loader').loader('swc-loader').end();
+    
+    // Adjust vue-loader to use swc-loader for script tags
+    config.module.rule('vue').use('vue-loader').tap(options => {
+      options.loaders = {
+        ...options.loaders,
+        js: [{
+          loader: 'swc-loader',
+        }],
+      };
+      return options;
+    });
     // Add swc-loader for TypeScript
     config.module
       .rule('typescript')
@@ -141,7 +137,6 @@ module.exports = {
         },
       }]);
 
-  
     // console.log(config)
   },
   runtimeCompiler: true,
