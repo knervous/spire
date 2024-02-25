@@ -506,7 +506,7 @@ export default {
         }
       }
 
-      const uuidv4     = require("uuid/v4")
+      const uuidv4     = require("uuid").v4
       this.componentId = uuidv4()
 
       // reagents

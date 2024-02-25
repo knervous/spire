@@ -102,7 +102,7 @@ export default {
     }
   },
   created() {
-    const uuidv4 = require("uuid/v4")
+    const uuidv4 = require("uuid").v4
     this.navId   = uuidv4()
   }
 }

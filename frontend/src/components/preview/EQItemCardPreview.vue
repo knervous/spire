@@ -614,7 +614,7 @@ export default {
     },
 
     async init() {
-      const uuidv4     = require("uuid/v4")
+      const uuidv4     = require("uuid").v4
       this.componentId = uuidv4()
 
       // dynamic section builder

@@ -84,7 +84,7 @@ import EqCheckbox      from "@/components/eq-ui/EQCheckbox.vue";
 import EqDebug         from "@/components/eq-ui/EQDebug.vue";
 import {SpireApi}      from "@/app/api/spire-api";
 import InfoErrorBanner from "@/components/InfoErrorBanner.vue";
-import * as path       from "path";
+import * as path       from "path-browserify";
 
 export default {
   name: "DatabaseBackup",
