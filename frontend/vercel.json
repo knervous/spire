@@ -5,11 +5,11 @@
   "outputDirectory": "dist",
   "installCommand": "npm install",
   "functions": {
-    "api/eqsage.js": {
+    "eqsage.js": {
       "memory": 1000,
       "maxDuration": 5
     },
-    "api/static.js": {
+    "static.js": {
       "memory": 1000,
       "maxDuration": 5
     }
