@@ -3,7 +3,7 @@ const httpProxy = require("http-proxy");
 // Create a proxy server with custom application logic
 const proxy = httpProxy.createProxyServer({});
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   // Extract the target URL from the header
   const target = req.headers["x-remote-api"];
 
@@ -21,14 +21,15 @@ module.exports = (req, res) => {
   // res.json({httpTarget, url: req.url})
   // return;
   // Proxy the request
-  proxy.web(
-    req,
-    res,
-    { target: httpTarget, changeOrigin: true, secure: false },
-    (error) => {
-      console.error("Proxy error:", error);
-      res.writeHead(500, { "Content-Type": "text/plain" });
-      res.text(`Proxy error: ${error.message}, ${target}`);
-    }
-  );
+  res.json(await fetch(httpTarget + req.url, { method: req.method, body: req.body }).then(a => a.json()));
+  // proxy.web(
+  //   req,
+  //   res,
+  //   { target: httpTarget, changeOrigin: true, secure: false },
+  //   (error) => {
+  //     console.error("Proxy error:", error);
+  //     res.writeHead(500, { "Content-Type": "text/plain" });
+  //     res.text(`Proxy error: ${error.message}, ${target}`);
+  //   }
+  // );
 };
