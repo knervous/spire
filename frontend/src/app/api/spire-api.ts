@@ -36,6 +36,8 @@ export class SpireApi {
 
     if (UserContext.getAccessToken() !== "") {
       spireAxiosConfig.headers = {'Authorization': 'Bearer ' + UserContext.getAccessToken(), 'x-remote-api': params.remote_backend}
+    } else {
+      spireAxiosConfig.headers = { 'x-remote-api': params.remote_backend }
     }
 
     return spireAxiosConfig

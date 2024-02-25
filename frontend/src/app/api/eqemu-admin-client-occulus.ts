@@ -23,6 +23,8 @@ export class OcculusClient {
     config.baseURL = (this._baseUrl + '/api/v1/admin/occulus')
     if (this.getAccessToken() !== '') {
       config.headers = {'Authorization': 'Bearer ' + this.getAccessToken(), 'x-remote-api': params.remote_backend }
+    } else {
+      config.headers = { 'x-remote-api': params.remote_backend }
     }
 
     return axios.create(config)
