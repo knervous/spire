@@ -8,10 +8,6 @@
     "api/eqsage.js": {
       "memory": 1000,
       "maxDuration": 5
-    },
-    "api/static.js": {
-      "memory": 1000,
-      "maxDuration": 5
     }
   },
   "rewrites": [
@@ -20,6 +16,6 @@
       "destination": "https://raw.githubusercontent.com/Akkadius/eq-asset-preview/master/$1"
     },
     { "source": "/eqsage", "destination": "/api/eqsage" },
-    { "source": "/static/(.*)", "destination": "/api/static.js?path=$1" }
+    { "source": "/static/(.*)", "destination": "https://eqsage.vercel.app/static/$1" }
   ]
 }
