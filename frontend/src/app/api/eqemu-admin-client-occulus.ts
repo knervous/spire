@@ -11,7 +11,7 @@ export class OcculusClient {
   /**
    * Base URL for admin api
    */
-  private static _baseUrl = params.remote_backend ??
+  private static _baseUrl = params.remote_backend ? '/remote-api' :
     (process.env.VUE_APP_BACKEND_BASE_URL && process.env.NODE_ENV !== 'production' ?
       process.env.VUE_APP_BACKEND_BASE_URL :
       window.location.origin)
@@ -22,7 +22,7 @@ export class OcculusClient {
   static client(config: AxiosRequestConfig = {}) {
     config.baseURL = (this._baseUrl + '/api/v1/admin/occulus')
     if (this.getAccessToken() !== '') {
-      config.headers = {'Authorization': 'Bearer ' + this.getAccessToken()}
+      config.headers = {'Authorization': 'Bearer ' + this.getAccessToken(), 'x-remote-api': params.remote_backend }
     }
 
     return axios.create(config)

@@ -12,7 +12,8 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 
 export class SpireApi {
   static getBasePath() {
-    return params.remote_backend ?? (process.env.VUE_APP_BACKEND_BASE_URL && process.env.NODE_ENV !== 'production' ?
+    return params.remote_backend ? '/remote-api' :
+    (process.env.VUE_APP_BACKEND_BASE_URL && process.env.NODE_ENV !== 'production' ?
       process.env.VUE_APP_BACKEND_BASE_URL :
       window.location.origin)
   }
@@ -34,7 +35,7 @@ export class SpireApi {
     }
 
     if (UserContext.getAccessToken() !== "") {
-      spireAxiosConfig.headers = {'Authorization': 'Bearer ' + UserContext.getAccessToken()}
+      spireAxiosConfig.headers = {'Authorization': 'Bearer ' + UserContext.getAccessToken(), 'x-remote-api': params.remote_backend}
     }
 
     return spireAxiosConfig
