@@ -82,14 +82,32 @@ module.exports = {
         },
       },
     };
-    config.module.rule('js').use('babel-loader').loader('swc-loader');
-    // Use swc for our ts loader
+    // Remove the existing rule for .js and .jsx files
+    config.module.rules.delete('js').delete('jsx');
     config.module.rules.delete('ts').delete('tsx');
 
+    // Add a new rule to use swc-loader for .js and .jsx files
+    config.module
+      .rule('swc')
+      .test(/\.(js|jsx)$/)
+      .use('swc-loader')
+      .loader('swc-loader')
+      .end();
+    // Use swc for our vue loader
+    config.module
+      .rule('vue')
+      .use('vue-loader')
+      .tap(options => {
+        options.loaders = {
+          ...options.loaders,
+          js: 'swc-loader',
+        };
+        return options;
+      });
     // Add swc-loader for TypeScript
     config.module
       .rule('typescript')
-      .test(/\.tsx?$/)
+      .test(/\.(ts|tsx)$/)
       .use('swc-loader')
       .loader('swc-loader')
       .options({
@@ -114,13 +132,12 @@ module.exports = {
       // Add TerserPlugin
       config.optimization.minimizer('terser').use(TerserPlugin, [{
         terserOptions: {
-          compress: {
-            // Terser compress options
-          },
-          mangle: {
-            // Terser mangle options
-          },
-          // Include any additional terser options here
+          // Disabling compression can improve build speeds.
+          compress: false,
+          // Mangle names to reduce file size but keep it enabled for better performance than disabling it.
+          mangle: true, // You can fine-tune mangle options if necessary
+          // Disabling source maps can also improve build speeds.
+          sourceMap: false,
         },
       }]);
 
