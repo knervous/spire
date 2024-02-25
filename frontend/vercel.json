@@ -2,7 +2,7 @@
   "buildCommand": "npm run build",
   "devCommand": "npm start",
   "framework": "vue",
-  "outputDirectory": "build",
+  "outputDirectory": "dist",
   "installCommand": "npm install",
   "functions": {
     "api/eqsage.js": {
