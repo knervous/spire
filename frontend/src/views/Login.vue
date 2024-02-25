@@ -118,7 +118,16 @@ import {SpireApi}      from "../app/api/spire-api";
 import InfoErrorBanner from "@/components/InfoErrorBanner.vue";
 import UserContext     from "@/app/user/UserContext";
 import axios           from "axios";
+const params = new Proxy(new URLSearchParams(window.location.search), {
+  get: (searchParams, prop) => searchParams.get(prop),
+});
+if (params.remote_backend) {
+  localStorage.setItem('remote-backend', params.remote_backend);
+}
 
+const remote_backend = params.remote_backend ?? localStorage.getItem('remote-backend');
+
+axios.defaults.headers['x-remote-api'] = remote_backend
 export default {
   name: 'Login.vue',
   components: { InfoErrorBanner, ContentArea },
@@ -164,16 +173,6 @@ export default {
   methods: {
     async loginSpire() {
       try {
-        const params = new Proxy(new URLSearchParams(window.location.search), {
-          get: (searchParams, prop: string) => searchParams.get(prop),
-        }) as any;
-        if (params.remote_backend) {
-          localStorage.setItem('remote-backend', params.remote_backend);
-        }
-
-        const remote_backend = params.remote_backend ?? localStorage.getItem('remote-backend');
-
-        axios.defaults.headers['x-remote-api'] = remote_backend
         const r = await axios.post(SpireApi.getBasePath() + "/auth/login", {
           username: this.username,
           password: this.password,
