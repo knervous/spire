@@ -5,7 +5,11 @@
   "outputDirectory": "build",
   "installCommand": "npm install",
   "functions": {
-    "api/hash.js": {
+    "api/eqsage.js": {
+      "memory": 1000,
+      "maxDuration": 5
+    },
+    "api/static.js": {
       "memory": 1000,
       "maxDuration": 5
     }
