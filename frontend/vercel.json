@@ -9,7 +9,7 @@
       "memory": 1000,
       "maxDuration": 5
     },
-    "api/remote-api.js": {
+    "api/remoteapi.js": {
       "memory": 1000,
       "maxDuration": 10
     }
