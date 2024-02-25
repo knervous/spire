@@ -12,7 +12,7 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 
 export class SpireApi {
   static getBasePath() {
-    return params.remote_backend ? '/remote-api' :
+    return params.remote_backend ? '/remoteapi' :
     (process.env.VUE_APP_BACKEND_BASE_URL && process.env.NODE_ENV !== 'production' ?
       process.env.VUE_APP_BACKEND_BASE_URL :
       window.location.origin)
