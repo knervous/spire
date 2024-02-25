@@ -5,11 +5,11 @@ const proxy = httpProxy.createProxyServer({});
 
 module.exports = (req, res) => {
   // Extract the target URL from the header
-  const target = req.headers['x-remote-backend-api'];
+  const target = req.headers['x-remote-api'];
 
   if (!target) {
     res.writeHead(400, { 'Content-Type': 'text/plain' });
-    return res.end('Error: Missing X-Remote-Backend-Api header');
+    return res.end('Error: Missing X-Remote-Api header');
   }
 
   // Optionally, manipulate the request URL or headers here
