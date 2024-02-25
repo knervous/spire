@@ -20,6 +20,10 @@
       "destination": "https://raw.githubusercontent.com/Akkadius/eq-asset-preview/master/$1"
     },
     { "source": "/eqsage", "destination": "/api/eqsage" },
+    {
+      "source": "/remoteapi/(.*)",
+      "destination": "/api/remoteapi"
+    },
     { "source": "/static/(.*)", "destination": "https://eqsage.vercel.app/static/$1" }
   ]
 }
