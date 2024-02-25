@@ -18,8 +18,8 @@ module.exports = (req, res) => {
   // Remove headers that might interfere with the proxy
   delete req.headers.host;
   const httpTarget = target.startsWith("http://") ? target : `http://${target}`;
-  // res.json({httpTarget, url: req.url})
-  // return;
+  res.json({httpTarget, url: req.url})
+  return;
   // Proxy the request
   proxy.web(
     req,
