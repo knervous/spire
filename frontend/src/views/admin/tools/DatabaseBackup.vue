@@ -96,7 +96,7 @@ export default {
 
       backupResult: {},
 
-      options: [
+      options: [ 
         {
           label: "All Tables",
           key: 'dump_all_tables',
