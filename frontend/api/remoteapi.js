@@ -22,6 +22,6 @@ module.exports = (req, res) => {
   proxy.web(req, res, { target, changeOrigin: true }, error => {
     console.error('Proxy error:', error);
     res.writeHead(500, { 'Content-Type': 'text/plain' });
-    res.end(`Proxy error: ${error.message}`);
+    res.text(`Proxy error: ${error.message}`);
   });
 };
