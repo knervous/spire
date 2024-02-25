@@ -13,13 +13,13 @@ module.exports = (req, res) => {
   }
 
   // Optionally, manipulate the request URL or headers here
-  req.url = req.url.replace(/^\/remote-api/, ""); // Adjust the URL
+  req.url = req.url.replace(/^\/remoteapi/, ""); // Adjust the URL
 
   // Remove headers that might interfere with the proxy
   delete req.headers.host;
   const httpTarget = target.startsWith("http://") ? target : `http://${target}`;
-  res.json({httpTarget, url: req.url})
-  return;
+  // res.json({httpTarget, url: req.url})
+  // return;
   // Proxy the request
   proxy.web(
     req,
