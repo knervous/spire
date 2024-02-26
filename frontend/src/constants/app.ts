@@ -44,7 +44,7 @@ export const App = {
   ASSET_WALLPAPER_URL: ASSET_CDN_BASE_URL_INT + 'assets/wallpaper/',
   ASSET_INVENTORY_SLOT_URL: ASSET_CDN_BASE_URL_INT + 'assets/inventory/',
   ASSET_SPRITE_ITEM_ICONS_URL: ASSET_CDN_BASE_URL_INT + 'assets/sprites/item-icons.css',
-  BACKEND_BASE_URL: remote_backend ?? (process.env.VUE_APP_BACKEND_BASE_URL ? process.env.VUE_APP_BACKEND_BASE_URL : window.location.origin),
+  BACKEND_BASE_URL: remote_backend ? window.location.origin : (process.env.VUE_APP_BACKEND_BASE_URL ? process.env.VUE_APP_BACKEND_BASE_URL : window.location.origin),
 
   // app level
   DEBUG: LocalSettings.get(Setting.DEBUG_MODE) === "true",

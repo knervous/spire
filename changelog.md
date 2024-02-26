@@ -1,3 +1,15 @@
+## [3.13.4] 2/24/2024
+
+**Database** Fix issue where an improperly configured secondary database such as queryserv or content database could keep the database object from being inserted into the Spire database connections properly.
+
+## [3.13.3] 2/24/2024
+
+**Encryption** Handle scenarios where user may have parts of an encrypted connection defined but the password is empty. Unencrypting an empty password will result in an out of range error. This will now be handled gracefully and the connection will be skipped if the password is empty.
+
+## [3.13.2] 2/23/2024
+
+**API Updates** Open access to Spire API types for spawn groups, doors, and objects for integration in Sage.
+
 ## [3.13.1] 2/11/2024
 
 **Sage** Introduce new page for integration with EQ Sage. Sage, among other things, will be a 3D zone database editor that plugs into the existing Spire API. It is currently in a prototyping/experimental phase and will be undergoing changes to initially support zone editing in a broad sense with details for each individual aspect explored and fine tuned to provide full support for an immersive editing experience. More info can be found in the EQEmu Discord under the #project-requiem channel and any questions can be directed to the creator and maintainer, temp0.
