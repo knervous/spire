@@ -83,59 +83,62 @@ module.exports = {
       },
     };
     // Remove the existing rule for .js and .jsx files
-   // config.module.rules.delete('js').delete('jsx');
-    // config.module.rules.delete('ts').delete('tsx');
+    config.module.rules.delete('js').delete('jsx');
+    config.module.rules.delete('ts').delete('tsx');
 
-    // // Add a new rule to use swc-loader for .js and .jsx files
-    // // Replace babel-loader with swc-loader for JS files
-    // config.module.rule('js').test(/\.js$/).use('swc-loader').loader('swc-loader').end();
+    // Add a new rule to use swc-loader for .js and .jsx files
+    // Replace babel-loader with swc-loader for JS files
+    config.module.rule('js').test(/\.js$/).use('swc-loader').loader('swc-loader').end();
     
-    // // Adjust vue-loader to use swc-loader for script tags
-    // config.module.rule('vue').use('vue-loader').tap(options => {
-    //   options.loaders = {
-    //     ...options.loaders,
-    //     js: [{
-    //       loader: 'swc-loader',
-    //     }],
-    //   };
-    //   return options;
-    // });
-    // // Add swc-loader for TypeScript
-    // config.module
-    //   .rule('typescript')
-    //   .test(/\.(ts|tsx)$/)
-    //   .use('swc-loader')
-    //   .loader('swc-loader')
-    //   .options({
-    //     jsc: {
-    //       parser: {
-    //         syntax: 'typescript',
-    //         tsx: true, // Enable if using TSX
-    //         decorators: true,
-    //         dynamicImport: true,
-    //       },
-    //       target: 'es2015',
-    //     },
-    //     module: {
-    //       type: 'es6',
-    //     },
-    //   });
+    // Adjust vue-loader to use swc-loader for script tags
+    config.module.rule('vue').use('vue-loader').tap(options => {
+      options.loaders = {
+        ...options.loaders,
+        js: [{
+          loader: 'swc-loader',
+        }],
+      };
+      return options;
+    });
+    // Add swc-loader for TypeScript
+    config.module
+      .rule('typescript')
+      .test(/\.(ts|tsx)$/)
+      .use('swc-loader')
+      .loader('swc-loader')
+      .options({
+        jsc: {
+          parser: {
+            syntax: 'typescript',
+            tsx: true, // Enable if using TSX
+            decorators: true,
+            dynamicImport: true,
+          },
+          target: 'es2015',
+        },
+        module: {
+          type: 'es6',
+        },
+      });
 
 
       // Clear existing minimizer setup
-      // config.optimization.minimizers.delete('terser');
+      config.optimization.minimizers.delete('terser');
 
       // // Add TerserPlugin
-      // config.optimization.minimizer('terser').use(TerserPlugin, [{
-      //   terserOptions: {
-      //     // Disabling compression can improve build speeds.
-      //     compress: false,
-      //     // Mangle names to reduce file size but keep it enabled for better performance than disabling it.
-      //     mangle: true, // You can fine-tune mangle options if necessary
-      //     // Disabling source maps can also improve build speeds.
-      //     sourceMap: false,
-      //   },
-      // }]);
+      if (process.env.NODE_ENV === 'production') {
+        config.optimization.minimizer('terser').use(TerserPlugin, [{
+          terserOptions: {
+            // Disabling compression can improve build speeds.
+            compress: false,
+            // Mangle names to reduce file size but keep it enabled for better performance than disabling it.
+            mangle: true, // You can fine-tune mangle options if necessary
+            // Disabling source maps can also improve build speeds.
+            sourceMap: false,
+          },
+        }]);
+      }
+      
 
     // console.log(config)
   },

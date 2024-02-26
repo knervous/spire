@@ -13,7 +13,7 @@ module.exports = (req, res) => {
   }
 
   // Optionally, manipulate the request URL or headers here
-  req.url = req.url.replace(/^\/remoteapi/, ""); // Adjust the URL
+  req.url = req.url.replace('remoteapi/api/v1/remoteapi/', '').replace(/^\/remoteapi/, ""); // Adjust the URL
 
   // Remove headers that might interfere with the proxy
   delete req.headers.host;
